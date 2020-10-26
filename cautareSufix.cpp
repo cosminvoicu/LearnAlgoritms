@@ -3,37 +3,44 @@
 
 using namespace std;
 
+const int nrMaxCaractere = 102;
+
+int countNumarCaractere(char sir[]) {
+  int numarCaractere = 0;
+
+  for ( int i = 0; sir[i]; ++i ) {
+    ++numarCaractere;
+  }
+  return numarCaractere;
+}
+
 int main() {
-  char s1[103],s2[103];
-  int n, contor = 0, nc1 = 0,nc2 = 0, pozS1, adevar = 0;
-  cin>>n;
+  char sir[nrMaxCaractere], sirN[nrMaxCaractere];
+  int N, contor = 0;
+
+  cin >> N;
   cin.get();
-  cin.getline(s1,102);
- for (int i = 0; s1[i]; ++i) {
-    ++nc1;
+
+  cin.getline(sir, nrMaxCaractere);
+  int numarCaractereSir = countNumarCaractere(sir);
+
+  for ( int i = 1; i<=N; ++i ) {
+    cin.getline(sirN, nrMaxCaractere);
+    bool gasit = true;
+    int numarCaractereSirN = countNumarCaractere(sirN)-1;
+    int x = numarCaractereSir - 1;
+    while (x>=0) {
+      if (sirN[numarCaractereSirN--] != sir[x--]) {
+        gasit = false;
+      }
+    }
+    if ( numarCaractereSirN == -1 ) gasit = false;
+
+    if (gasit) {
+      ++contor;
+    }
   }
 
-  for ( int i = 1; i<=n; ++i) {
-    cin.getline(s2,102);
-    nc2=0;
-    for ( int j = 0; s2[j]; ++j ) {
-      ++nc2;
-    }
-    pozS1 = nc1 - 1;
-    for (int k = nc2-1; k>=nc2-nc1; --k) {
-      //cout<<"k: "<<k<<"\n";
-      if ( s2[k] == s1[pozS1] && !((s2[k-1] == '\0'))) {
-        adevar = 1;
-      } else {
-        adevar = 0;
-        break;
-      }
-      --pozS1;
-    }
-      if ( adevar ) {
-        ++contor;
-      }
-    }
-  cout<<contor;
+  cout << contor;
   return 0;
 }
